@@ -11,6 +11,7 @@ import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Scanner;
 
 public class AddressBook {
@@ -18,7 +19,7 @@ public class AddressBook {
     static boolean isRunning = true;
 
     //ArrayList object is created
-    ArrayList<Contacts> person = new ArrayList<Contacts>();
+    Collection<Contacts> person = new ArrayList<Contacts>();
 
     //Taking input from the user
     static Scanner scanner = new Scanner(System.in);
@@ -32,10 +33,10 @@ public class AddressBook {
         logger.info("2. Edit Contact");
         logger.info("3. Delete Contact");
         logger.info("4. Print all contacts");
-        logger.info("5. Exit");
+        logger.info("5. Add multiple person to Address Book");
+        logger.info("6. Exit");
         logger.info("Enter your choice: ");
 
-        //cases created for users choice
         int option = scanner.nextInt();
         switch (option) {
             case 1:
@@ -55,6 +56,10 @@ public class AddressBook {
                 break;
 
             case 5:
+                addMultiplePerson();
+                break;
+
+            case 6:
                 logger.info("Exit...");
                 isRunning = false;
                 break;
@@ -105,7 +110,7 @@ public class AddressBook {
         contacts.setEmail(email);
 
         person.add(contacts);
-        logger.info("Contact Added Successfully");
+        logger.info("Contact " + firstName + "created Successfully");
         System.out.println(person.toString());
     }
 
@@ -120,7 +125,7 @@ public class AddressBook {
 
         //for loop used to get the size of array to edit the contact
         for (int i = 0; i < person.size(); i++) {
-            if (person.get(i).getFirstName().equals(first)) {
+            if (((ArrayList<Contacts>) person).get(i).getFirstName().equals(first)) {
 
                 isPerson = true;
                 logger.info("Enter your choice to edit: 1. First Name\n2. Last Name\n3. Address\n4.City\n" +
@@ -130,48 +135,48 @@ public class AddressBook {
                     case 1:
                         logger.info("Enter First Name: ");
                         String firstName = scanner.next();
-                        person.get(i).setFirstName(firstName);
+                        ((ArrayList<Contacts>) person).get(i).setFirstName(firstName);
                         break;
 
                     case 2:
                         logger.info("Enter Last Name: ");
                         String lastName = scanner.next();
-                        person.get(i).setLastName(lastName);
+                        ((ArrayList<Contacts>) person).get(i).setLastName(lastName);
                         break;
 
                     case 3:
                         logger.info("Enter Address: ");
                         String address = scanner.next();
-                        person.get(i).setAddress(address);
+                        ((ArrayList<Contacts>) person).get(i).setAddress(address);
 
                     case 4:
                         logger.info("Enter City: ");
                         String city = scanner.next();
-                        person.get(i).setCity(city);
+                        ((ArrayList<Contacts>) person).get(i).setCity(city);
                         break;
 
                     case 5:
                         logger.info("Enter State: ");
                         String state = scanner.next();
-                        person.get(i).setState(state);
+                        ((ArrayList<Contacts>) person).get(i).setState(state);
                         break;
 
                     case 6:
                         logger.info("Enter Zip: ");
                         String zip = scanner.next();
-                        person.get(i).setZip(zip);
+                        ((ArrayList<Contacts>) person).get(i).setZip(zip);
                         break;
 
                     case 7:
                         logger.info("Enter PhoneNumber: ");
                         String phoneNumber = scanner.next();
-                        person.get(i).setPhoneNumber(phoneNumber);
+                        ((ArrayList<Contacts>) person).get(i).setPhoneNumber(phoneNumber);
                         break;
 
                     case 8:
                         logger.info("Enter Email: ");
                         String email = scanner.next();
-                        person.get(i).setEmail(email);
+                        ((ArrayList<Contacts>) person).get(i).setEmail(email);
                         break;
 
                     default:
@@ -180,9 +185,9 @@ public class AddressBook {
                 } //end of switch
                 logger.info(person);
             }
-            if (!isPerson)
-                logger.info("Contact not found!!!");
         }
+        if (!isPerson)
+            logger.info("Contact not found!!!");
     } // end of for loop
 
     /*
@@ -192,12 +197,31 @@ public class AddressBook {
         logger.info("Enter the First Name of the contact that you want to delete: ");
         String firstName = scanner.next();
 
-        for (int i = 0; i< person.size();i++) {
-            if (person.get(i).getFirstName().equals(firstName)) {
-                person.remove(person.get(i));
+        for (int i = 0; i < person.size(); i++) {
+            if (((ArrayList<Contacts>) person).get(i).getFirstName().equals(firstName)) {
+                person.remove(((ArrayList<Contacts>) person).get(i));
                 logger.info("Contact removed successfully!!!");
-            }else
+            } else
                 logger.info("Contact not found.");
+        }
+    }
+
+    /*
+     * addMultiplePerson method created to add multiple person to address Book
+     */
+    public void addMultiplePerson() {
+        while (true) {
+            logger.info("Enter your choice \n1. Create Contact\n2. Edit Contact" + "\n3. To Delete Contact\n4. Exit");
+            int option = scanner.nextInt();
+            switch (option) {
+                case 1 -> createContacts();
+                case 2 -> editContacts();
+                case 3 -> deleteContact();
+                case 4 -> System.out.println("Exit..");
+                default -> System.out.println("Invalid Choice");
+            }
+            if (option == 4)
+                break;
         }
     }
 
@@ -205,8 +229,8 @@ public class AddressBook {
      * printAllContacts method created to print all contacts of AddressBook
      */
     public void printAllContacts() {
-        for (int i = 0; i < person.size();i++) {
-            logger.info(person.get(i));
+        for (int i = 0; i < person.size(); i++) {
+            logger.info(((ArrayList<Contacts>) person).get(i));
         }
     }
 
