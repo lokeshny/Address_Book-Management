@@ -23,13 +23,19 @@ public class AddressBook {
     //Taking input from the user
     static Scanner scanner = new Scanner(System.in);
 
+    /*
+     * console method create for taking input as per the User choice.
+     */
     public void console() {
         logger.info("-----------------");
         logger.info("1. Create contact");
         logger.info("2. Edit Contact");
-        logger.info("3. Exit");
+        logger.info("3. Delete Contact");
+        logger.info("4. Print all contacts");
+        logger.info("5. Exit");
         logger.info("Enter your choice: ");
 
+        //cases created for users choice
         int option = scanner.nextInt();
         switch (option) {
             case 1:
@@ -41,6 +47,14 @@ public class AddressBook {
                 break;
 
             case 3:
+                deleteContact();
+                break;
+
+            case 4:
+                printAllContacts();
+                break;
+
+            case 5:
                 logger.info("Exit...");
                 isRunning = false;
                 break;
@@ -92,7 +106,7 @@ public class AddressBook {
 
         person.add(contacts);
         logger.info("Contact Added Successfully");
-        logger.info(person.toString());
+        System.out.println(person.toString());
     }
 
     /*
@@ -109,7 +123,8 @@ public class AddressBook {
             if (person.get(i).getFirstName().equals(first)) {
 
                 isPerson = true;
-                logger.info("Enter your choice to edit: 1. First Name\n2. Last Name\n3. Address\n4.City\n5. State\n6. Zip\n7. PhoneNumber\n8. Email\n9. Exit ");
+                logger.info("Enter your choice to edit: 1. First Name\n2. Last Name\n3. Address\n4.City\n" +
+                        "5. State\n6. Zip\n7. PhoneNumber\n8. Email\n9. Exit ");
                 int choice = scanner.nextInt();
                 switch (choice) {
                     case 1:
@@ -170,6 +185,30 @@ public class AddressBook {
         }
     } // end of for loop
 
+    /*
+     * deleteContacts method created to remove specific contact.
+     */
+    public void deleteContact() {
+        logger.info("Enter the First Name of the contact that you want to delete: ");
+        String firstName = scanner.next();
+
+        for (int i = 0; i< person.size();i++) {
+            if (person.get(i).getFirstName().equals(firstName)) {
+                person.remove(person.get(i));
+                logger.info("Contact removed successfully!!!");
+            }else
+                logger.info("Contact not found.");
+        }
+    }
+
+    /*
+     * printAllContacts method created to print all contacts of AddressBook
+     */
+    public void printAllContacts() {
+        for (int i = 0; i < person.size();i++) {
+            logger.info(person.get(i));
+        }
+    }
 
     public static void main(String[] args) {
         BasicConfigurator.configure();
