@@ -12,6 +12,8 @@ import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.Scanner;
 
 public class AddressBook {
@@ -20,6 +22,7 @@ public class AddressBook {
 
     //ArrayList object is created
     Collection<Contacts> person = new ArrayList<Contacts>();
+    Dictionary address = new Hashtable();
 
     //Taking input from the user
     static Scanner scanner = new Scanner(System.in);
@@ -34,7 +37,8 @@ public class AddressBook {
         logger.info("3. Delete Contact");
         logger.info("4. Print all contacts");
         logger.info("5. Add multiple person to Address Book");
-        logger.info("6. Exit");
+        logger.info("6. Create another address book");
+        logger.info("7. Exit");
         logger.info("Enter your choice: ");
 
         int option = scanner.nextInt();
@@ -60,6 +64,10 @@ public class AddressBook {
                 break;
 
             case 6:
+                addAddressBook();
+                break;
+
+            case 7:
                 logger.info("Exit...");
                 isRunning = false;
                 break;
@@ -110,7 +118,7 @@ public class AddressBook {
         contacts.setEmail(email);
 
         person.add(contacts);
-        logger.info("Contact " + firstName + "created Successfully");
+        logger.info("Contact " +firstName+ "created Successfully");
         System.out.println(person.toString());
     }
 
@@ -135,48 +143,48 @@ public class AddressBook {
                     case 1:
                         logger.info("Enter First Name: ");
                         String firstName = scanner.next();
-                        ((ArrayList<Contacts>) person).get(i).setFirstName(firstName);
+                        ((ArrayList<Contacts>)person).get(i).setFirstName(firstName);
                         break;
 
                     case 2:
                         logger.info("Enter Last Name: ");
                         String lastName = scanner.next();
-                        ((ArrayList<Contacts>) person).get(i).setLastName(lastName);
+                        ((ArrayList<Contacts>)person).get(i).setLastName(lastName);
                         break;
 
                     case 3:
                         logger.info("Enter Address: ");
                         String address = scanner.next();
-                        ((ArrayList<Contacts>) person).get(i).setAddress(address);
+                        ((ArrayList<Contacts>)person).get(i).setAddress(address);
 
                     case 4:
                         logger.info("Enter City: ");
                         String city = scanner.next();
-                        ((ArrayList<Contacts>) person).get(i).setCity(city);
+                        ((ArrayList<Contacts>)person).get(i).setCity(city);
                         break;
 
                     case 5:
                         logger.info("Enter State: ");
                         String state = scanner.next();
-                        ((ArrayList<Contacts>) person).get(i).setState(state);
+                        ((ArrayList<Contacts>)person).get(i).setState(state);
                         break;
 
                     case 6:
                         logger.info("Enter Zip: ");
                         String zip = scanner.next();
-                        ((ArrayList<Contacts>) person).get(i).setZip(zip);
+                        ((ArrayList<Contacts>)person).get(i).setZip(zip);
                         break;
 
                     case 7:
                         logger.info("Enter PhoneNumber: ");
                         String phoneNumber = scanner.next();
-                        ((ArrayList<Contacts>) person).get(i).setPhoneNumber(phoneNumber);
+                        ((ArrayList<Contacts>)person).get(i).setPhoneNumber(phoneNumber);
                         break;
 
                     case 8:
                         logger.info("Enter Email: ");
                         String email = scanner.next();
-                        ((ArrayList<Contacts>) person).get(i).setEmail(email);
+                        ((ArrayList<Contacts>)person).get(i).setEmail(email);
                         break;
 
                     default:
@@ -197,9 +205,9 @@ public class AddressBook {
         logger.info("Enter the First Name of the contact that you want to delete: ");
         String firstName = scanner.next();
 
-        for (int i = 0; i < person.size(); i++) {
+        for (int i = 0; i< person.size();i++) {
             if (((ArrayList<Contacts>) person).get(i).getFirstName().equals(firstName)) {
-                person.remove(((ArrayList<Contacts>) person).get(i));
+                person.remove(((ArrayList<Contacts>)person).get(i));
                 logger.info("Contact removed successfully!!!");
             } else
                 logger.info("Contact not found.");
@@ -226,11 +234,22 @@ public class AddressBook {
     }
 
     /*
+     * addAddressBook method created to add new add multiple address book to the system.
+     */
+    public void addAddressBook() {
+        Scanner scanner = new Scanner(System.in);
+        logger.info("Enter name of address Book you want: ");
+        AddressBook addressBookMain = new AddressBook();
+        String bookName = scanner.nextLine();
+        address.put(bookName,addressBookMain);
+        logger.info("Address Book " +bookName+ " has been created.");
+    }
+    /*
      * printAllContacts method created to print all contacts of AddressBook
      */
     public void printAllContacts() {
-        for (int i = 0; i < person.size(); i++) {
-            logger.info(((ArrayList<Contacts>) person).get(i));
+        for (int i = 0; i < person.size();i++) {
+            logger.info(((ArrayList<Contacts>)person).get(i));
         }
     }
 
@@ -241,9 +260,9 @@ public class AddressBook {
          */
         logger.info("Welcome to Address Book Program!");
         //AddressBookMain object created
-        AddressBook addressBook = new AddressBook();
+        AddressBook addressBookMain = new AddressBook();
         while (isRunning) {
-            addressBook.console();
+            addressBookMain.console();
         }
     }
 }
